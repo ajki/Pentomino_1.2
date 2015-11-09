@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -97,7 +98,8 @@ public class Configuration {
 	}
 	
 	public static void loadConfig() throws Exception{
-		File directory = new File(getDefaultDirectory(), "/Pentomino");
+		String path = Paths.get(".").toAbsolutePath().normalize().toString();
+		File directory = new File(path, "/Pentomino");
 		if (!directory.exists()){
 			directory.mkdirs();
 		}
@@ -146,7 +148,9 @@ public class Configuration {
 	}
 	
 	public static void saveConfig() throws Exception{
-		File directory = new File(getDefaultDirectory(), "/Pentomino");
+		String path = Paths.get(".").toAbsolutePath().normalize().toString();
+		
+		File directory = new File(path, "/Text Files");
 		if (!directory.exists()){
 			directory.mkdirs();
 		}
@@ -167,15 +171,6 @@ public class Configuration {
 		pw.close();
 	}
 	
-	public static String getDefaultDirectory(){
-		String OS = System.getProperty("os.name").toUpperCase();
-		if(OS.contains("WIN")){
-			return System.getenv("APPDATA");
-		}
-		if(OS.contains("MAC")){
-			return System.getProperty("user.home") + "Library/Application Support";			
-		}
-		return System.getProperty("user.home");
-	}
+	
 	
 }
