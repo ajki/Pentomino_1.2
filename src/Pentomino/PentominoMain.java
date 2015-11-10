@@ -12,7 +12,7 @@ import javax.swing.*;
 
 public class PentominoMain extends Canvas implements Runnable{
 	
-	public static final int WIDTH=400, HEIGHT=565;
+	protected static final int WIDTH=400, HEIGHT=565;
 	
 	public static void main(String[] args){
 		
@@ -49,13 +49,13 @@ public class PentominoMain extends Canvas implements Runnable{
 			public void actionPerformed(ActionEvent e){
 				int highscore = 0; // replace this with getHighscoreMethod later
 				JFrame alert = new JFrame("High Score");
-				alert.setSize(200, 200);
+				alert.setSize(500, 400);
 				alert.setLayout(null);
 				alert.setLocationRelativeTo(null);
 				alert.setAlwaysOnTop(true);
 				
 				JLabel score = new JLabel("The high score is: " + highscore);
-				score.setBounds(0, 0, 200, 50);
+				score.setBounds(0, 0, 300, 100);
 				
 				JButton okayButton = new JButton("Okay");
 				okayButton.setBounds(50, 120, 100, 30);

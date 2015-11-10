@@ -8,8 +8,8 @@ import java.util.HashMap;
 
 public class KeyGetter {
 	
-	public static HashMap<String, Integer> keys;
-	public static ArrayList<String> keyNames;
+	protected static HashMap<String, Integer> keys;
+	protected static ArrayList<String> keyNames;
 	
 	public static void loadKeys(){
 		keys = new HashMap<String, Integer>();

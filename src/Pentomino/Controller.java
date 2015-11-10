@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class Controller implements KeyListener{
 	
 	PentominoMain game;
-	public boolean left, right, rotate, down, pause;
+	protected boolean left, right, rotate, down, pause;
 	
 	public Controller(PentominoMain game){
 		this.game=game;
@@ -19,6 +19,7 @@ public class Controller implements KeyListener{
 			System.out.println("right pressed");
 		}else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Configuration.rotate)){
 			System.out.println("rotate pressed");
+			
 		}else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Configuration.down)){
 			System.out.println("down pressed");
 		}else if (KeyEvent.getKeyText(e.getKeyCode()).equals(Configuration.pause)){

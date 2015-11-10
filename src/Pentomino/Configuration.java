@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 
 public class Configuration {
 	
-	public static String rotate ="Up", left= "Left", right="Right", down="Down", pause="P";
+	protected static String rotate ="Up", left= "Left", right="Right", down="Down", pause="P";
 	private static ArrayList<Choice> choices;
 	
 	public static void openConfig(JFrame frame){
@@ -99,7 +99,7 @@ public class Configuration {
 	
 	public static void loadConfig() throws Exception{
 		String path = Paths.get(".").toAbsolutePath().normalize().toString();
-		File directory = new File(path, "/Pentomino");
+		File directory = new File(path, "/Text Files");
 		if (!directory.exists()){
 			directory.mkdirs();
 		}
