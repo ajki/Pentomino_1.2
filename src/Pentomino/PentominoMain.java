@@ -48,7 +48,9 @@ public class PentominoMain extends Canvas implements Runnable{
 		highScore.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				int highscore = 0; // replace this with getHighscoreMethod later
-				JFrame alert = new JFrame("High Score");
+				
+				//@
+				final JFrame alert = new JFrame("High Score");
 				alert.setSize(500, 400);
 				alert.setLayout(null);
 				alert.setLocationRelativeTo(null);
