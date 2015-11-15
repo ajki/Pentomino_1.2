@@ -1,13 +1,20 @@
 package Pentomino;
 
+import Pentomino.Interfaces.Control;
+
 public class Board {
 	Square[][] board;
 	Square[][] shadowBoard;
 	Pentomino livingPentomino;
-	
-	public void moveLivingPentomino(String Direction){
-		
+	public Board(int gameWidth, int gameHeight){
+		board = new Square[gameWidth][gameHeight];
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[0].length; j++) {
+				board[i][j]=new Square(i, j);
+			}
+		}
 	}
+	
 	public void checkForFullLines(){
 		
 	}
@@ -21,6 +28,10 @@ public class Board {
 		
 	}
 	public void moveLivingPentominoOneTick(){
+		
+	}
+	public void moveLivingPentomino(Control c) {
+		
 		
 	}
 	

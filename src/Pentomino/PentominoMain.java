@@ -10,13 +10,23 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.*;
 
-public class PentominoMain extends Canvas implements Runnable{
+import Pentomino.Interfaces.Control;
+import Pentomino.Interfaces.Display;
+import Pentomino.Interfaces.TetrisGame;
+
+public class PentominoMain extends Canvas implements Runnable,Display{
 	
 	protected static final int WIDTH=400, HEIGHT=565;
+	protected TetrisGame game;
+	private Controller controller;
+	private Board board;
+	
 	
 	public static void main(String[] args){
+		final PentominoMain pm = new PentominoMain();
 		
 		final JFrame frame = new JFrame("Pentomino");
+		
 		frame.setSize(WIDTH,HEIGHT);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
@@ -37,9 +47,11 @@ public class PentominoMain extends Canvas implements Runnable{
 		file.setBounds(0,0,45,24);
 		
 		JMenuItem newGame = new JMenuItem("New Game");
+		
 		newGame.addActionListener(new ActionListener(){
+			
 			public void actionPerformed(ActionEvent e){
-				//Code for new game
+				startNewGame(pm);
 				System.out.println("Starting New Game...");
 			}
 		});
@@ -89,7 +101,7 @@ public class PentominoMain extends Canvas implements Runnable{
 			}
 		});
 		
-		PentominoMain pm = new PentominoMain();
+		
 		pm.setBounds(0, 25, WIDTH, HEIGHT-25);
 		
 		frame.add(pm);
@@ -105,6 +117,15 @@ public class PentominoMain extends Canvas implements Runnable{
 		
 	}
 	
+	/**This methods is executed after the users klings on start a new game
+	 * @param pm 
+	 * 
+	 */
+	protected static void startNewGame(PentominoMain pm) {
+		pm.game = new Game((Control)pm.controller, (Display)pm, null);
+		pm.game.start();
+	}
+
 	public void start() {
 		Thread t = new Thread(this);
 		t.setPriority(Thread.MAX_PRIORITY);
@@ -132,17 +153,50 @@ public class PentominoMain extends Canvas implements Runnable{
 	}
 	
 	public void initialize(){
-		this.addKeyListener(new Controller(this));
+		controller = new Controller();
+		this.addKeyListener(controller);
 		requestFocus();
 		
 	}
 	
 	public void render(Graphics2D g){
-		g.setColor(Color.BLACK);
+		if (board==null){
+		g.setColor(Color.MAGENTA);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Calibri", Font.PLAIN, 20));
 		g.drawString("Pentomino", 140, 50);
+		}
+		drawBoard(g,WIDTH,HEIGHT,board);
+	}
+
+	private void drawBoard(Graphics2D g, int width2, int height2, Board board2) {
+		if (board2==null)return;
+		Square[][] s = board2.getFullBoard();
+		
+		int sW = s.length;
+		int sH = s[0].length;
+		int squareHeight = width2/sW; 
+		int squareWidth = height2/sH;
+		
+		for (int i = 0; i<sW;i++){
+			for (int j = 0; j <sH;j++){
+				g.setColor(s[i][j].getC());
+				g.fillRect(squareWidth*i, squareWidth*j, squareWidth, squareHeight);
+				g.setColor(Color.BLACK);
+				g.fillRect(squareWidth*i, squareWidth*j, squareWidth, squareHeight);				
+			}
+		}
+	}
+
+	public void setData(Board b) {
+		this.board = b;
+		
+	}
+
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

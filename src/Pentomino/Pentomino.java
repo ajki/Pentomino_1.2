@@ -1,7 +1,8 @@
 package Pentomino;
+
+import Pentomino.Interfaces.PentominoInterface;
 	
-	
-	public class Pentomino 
+	public class Pentomino implements PentominoInterface
 	{
 		protected Square[] pMain= {Square(0,1),Square(1,1),Square(0,0),Square(1,0),Square(0,-1)};
 		protected Square[] pM1= {Square(-1,0),Square(0,0),Square(1,0),Square(0,-1),Square(1,-1)};
