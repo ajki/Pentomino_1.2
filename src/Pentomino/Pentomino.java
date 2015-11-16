@@ -1,5 +1,7 @@
 package Pentomino;
 
+import java.awt.Color;
+import java.awt.List;
 import java.util.ArrayList;
 
 import Pentomino.Interfaces.PentominoInterface;
@@ -92,14 +94,23 @@ import Pentomino.Interfaces.PentominoInterface;
 		}
 		
 		public Pentomino(){
-			
+			Square[] lOther2 = new Square[lOther.length];
+			System.arraycopy(lOther, 0, lOther2, 0, lOther.length);
+			for (Square square : lOther2) {
+				square.setC(Color.GREEN);
+			}
+			squares.add(lOther2[0]);
+			squares.add(lOther2[1]);
+			squares.add(lOther2[2]);
+			squares.add(lOther2[3]);
+			squares.add(lOther2[4]);
 		}
 
 		ArrayList<Square> squares = new ArrayList<Square>();
 
 		public Square[] getSquares() {
 			
-			return (Square[])squares.toArray();
+			return squares.toArray(new Square[squares.size()]);
 		}
 
 		public void moveX(int j) {
@@ -116,7 +127,8 @@ import Pentomino.Interfaces.PentominoInterface;
 			
 		}
 
-		public boolean below(int line) {
+	public boolean below(int line) {
+			
 			int count = 0;
 			for (Square s : squares) {
 				if (s.getY()>line)count++;

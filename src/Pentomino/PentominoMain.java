@@ -178,18 +178,29 @@ public class PentominoMain extends Canvas implements Runnable,Display{
 		if (board2==null)return;
 		Square[][] s = board2.getFullBoard();
 		
-		int sW = s.length;
-		int sH = s[0].length;
+		int sH = s.length;
+		int sW = s[0].length;
 		int squareWidth = width2/sW; 
 		int squareHeight = height2/sH;
 		
 		for (int i = 0; i<sW;i++){
 			for (int j = 0; j <sH;j++){
-				g.setColor(s[i][j].getC());
+				g.setColor(s[j][i].getC());
 				g.fillRect(squareWidth*i, squareHeight*j, squareWidth, squareHeight);
 				g.setColor(Color.BLACK);
 				g.drawRect(squareWidth*i, squareHeight*j, squareWidth, squareHeight);				
 			}
+		}
+		
+		Pentomino p = board2.getLivingPentomino();
+		if (p==null) return;
+		Square[] ps= p.getSquares();
+		
+		for (int i = 0; i<ps.length;i++){
+			g.setColor(ps[i].getC());
+			g.fillRect(squareWidth*ps[i].getX(), squareHeight*ps[i].getY(), squareWidth, squareHeight);
+			g.setColor(Color.BLACK);
+			g.drawRect(squareWidth*ps[i].getX(), squareHeight*ps[i].getY(), squareWidth, squareHeight);	
 		}
 	}
 

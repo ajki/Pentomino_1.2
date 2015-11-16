@@ -9,7 +9,7 @@ public class Board {
 	Square[][] shadowBoard;
 	Pentomino livingPentomino;
 	public Board(int gameWidth, int gameHeight){
-		board = new Square[gameWidth][gameHeight];
+		board = new Square[gameHeight][gameWidth];
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[0].length; j++) {
 				board[i][j]=new Square(i, j);
@@ -35,15 +35,18 @@ public class Board {
 	public void moveLivingPentominoOneTick(){
 		if (livingPentomino==null) {
 			livingPentomino = new Pentomino();
-			livingPentomino.moveX(board[0].length/2);
+			System.out.println(board[1].length/2);
+			livingPentomino.moveX(board[1].length/2);
 			livingPentomino.moveY(-2);
 			return;
 		}
 		
 		livingPentomino.moveY(1);
 		
-		if (livingPentomino.below(board[0].length)) {
+		if (livingPentomino.below(board.length)) {
 			livingPentomino = new Pentomino();
+			livingPentomino.moveX(board[1].length/2);
+			livingPentomino.moveY(-2);
 			return;
 		}
 	}
