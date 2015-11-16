@@ -1,5 +1,7 @@
 package Pentomino;
 
+import java.util.ArrayList;
+
 import Pentomino.Interfaces.PentominoInterface;
 	
 	public class Pentomino implements PentominoInterface
@@ -83,12 +85,45 @@ import Pentomino.Interfaces.PentominoInterface;
 		protected Square[] lO1= {Square(0,1),Square(0,0),Square(1,0),Square(2,0),Square(3,0)};
 		protected Square[] lO2= {Square(0,0),Square(1,0),Square(0,-1),Square(0,-2),Square(0,-3)};
 		protected Square[] lO3= {Square(-3,0),Square(-2,0),Square(-1,0),Square(0,0),Square(0,-1)};
-
+		
 		public Square Square(int j, int k) {
 			Square a=new Square(j,k);
 			return a;
 		}
-
 		
+		public Pentomino(){
+			
+		}
+
+		ArrayList<Square> squares = new ArrayList<Square>();
+
+		public Square[] getSquares() {
+			
+			return (Square[])squares.toArray();
+		}
+
+		public void moveX(int j) {
+			for (Square s : squares) {
+				s.setX(s.getX()+j);
+			}
+			
+		}
+
+		public void moveY(int j) {
+			for (Square s : squares) {
+				s.setY(s.getY()+j);
+			}
+			
+		}
+
+		public boolean below(int line) {
+			int count = 0;
+			for (Square s : squares) {
+				if (s.getY()>line)count++;
+				
+			}
+			if (count == squares.size())return true;
+			return false;
+		}
 		
 	}

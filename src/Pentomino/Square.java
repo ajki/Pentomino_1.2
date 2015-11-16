@@ -13,6 +13,7 @@ public class Square {
 		this.c=c;
 	}*/
 	public Square(int x, int y){
+		c = Color.BLUE;
 		this.x=x;
 		this.y=y;
 	}

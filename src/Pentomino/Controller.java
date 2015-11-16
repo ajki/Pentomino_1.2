@@ -59,39 +59,10 @@ public class Controller implements KeyListener,Control{
 		
 	}
 
-	public boolean isUpPressed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean isDownPressed() {
+	
+	public boolean isButtonPressed(Buttons b) {
 		
-		return buttons[Control.Buttons.Down.ordinal()];
-	}
-
-	public boolean isLeftPressed() {
-		
-		return buttons[Control.Buttons.Left.ordinal()]=false;
-	}
-
-	public boolean isRightPressed() {
-		
-		return buttons[Control.Buttons.Right.ordinal()]=false;
-	}
-
-	public boolean isStartPressed() {
-		
-		return buttons[Control.Buttons.Start.ordinal()];
-	}
-
-	public boolean isRotateRightPressed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean isRotateLeftPressed() {
-		
-		return buttons[Control.Buttons.RotateLeft.ordinal()];
+		return buttons[b.ordinal()];
 	}
 	
 	

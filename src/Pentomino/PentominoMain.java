@@ -166,25 +166,29 @@ public class PentominoMain extends Canvas implements Runnable,Display{
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Calibri", Font.PLAIN, 20));
 		g.drawString("Pentomino", 140, 50);
-		}
+		}else{
 		drawBoard(g,WIDTH,HEIGHT,board);
+		}
 	}
 
 	private void drawBoard(Graphics2D g, int width2, int height2, Board board2) {
+		g.setColor(Color.lightGray);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
 		if (board2==null)return;
 		Square[][] s = board2.getFullBoard();
 		
 		int sW = s.length;
 		int sH = s[0].length;
-		int squareHeight = width2/sW; 
-		int squareWidth = height2/sH;
+		int squareWidth = width2/sW; 
+		int squareHeight = height2/sH;
 		
 		for (int i = 0; i<sW;i++){
 			for (int j = 0; j <sH;j++){
 				g.setColor(s[i][j].getC());
-				g.fillRect(squareWidth*i, squareWidth*j, squareWidth, squareHeight);
+				g.fillRect(squareWidth*i, squareHeight*j, squareWidth, squareHeight);
 				g.setColor(Color.BLACK);
-				g.fillRect(squareWidth*i, squareWidth*j, squareWidth, squareHeight);				
+				g.drawRect(squareWidth*i, squareHeight*j, squareWidth, squareHeight);				
 			}
 		}
 	}

@@ -1,5 +1,7 @@
 package Pentomino;
 
+import java.awt.Color;
+
 import Pentomino.Interfaces.Control;
 
 public class Board {
@@ -24,13 +26,38 @@ public class Board {
 	public Square[][] getFullBoard(){
 		return board;
 	}
+	public Pentomino getLivingPentomino(){
+		return livingPentomino;
+	}
 	public void setLivingPentominoDown(){
 		
 	}
 	public void moveLivingPentominoOneTick(){
+		if (livingPentomino==null) {
+			livingPentomino = new Pentomino();
+			livingPentomino.moveX(board[0].length/2);
+			livingPentomino.moveY(-2);
+			return;
+		}
 		
+		livingPentomino.moveY(1);
+		
+		if (livingPentomino.below(board[0].length)) {
+			livingPentomino = new Pentomino();
+			return;
+		}
 	}
 	public void moveLivingPentomino(Control c) {
+		if (c.isButtonPressed(Control.Buttons.Left) ){
+			livingPentomino.moveX(-1);
+		}
+		if (c.isButtonPressed(Control.Buttons.Down) ){
+			livingPentomino.moveY(1);
+		}
+		if (c.isButtonPressed(Control.Buttons.Right) ){
+			livingPentomino.moveX(1);
+		}
+		
 		
 		
 	}
