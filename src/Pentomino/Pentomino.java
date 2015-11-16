@@ -1,7 +1,12 @@
 package Pentomino;
+
+import java.awt.Color;
+import java.awt.List;
+import java.util.ArrayList;
+
+import Pentomino.Interfaces.PentominoInterface;
 	
-	
-	public class Pentomino 
+	public class Pentomino implements PentominoInterface
 	{
 		protected Square[] pMain= {Square(0,1),Square(1,1),Square(0,0),Square(1,0),Square(0,-1)};
 		protected Square[] pM1= {Square(-1,0),Square(0,0),Square(1,0),Square(0,-1),Square(1,-1)};
@@ -82,12 +87,55 @@ package Pentomino;
 		protected Square[] lO1= {Square(0,1),Square(0,0),Square(1,0),Square(2,0),Square(3,0)};
 		protected Square[] lO2= {Square(0,0),Square(1,0),Square(0,-1),Square(0,-2),Square(0,-3)};
 		protected Square[] lO3= {Square(-3,0),Square(-2,0),Square(-1,0),Square(0,0),Square(0,-1)};
-
+		
 		public Square Square(int j, int k) {
 			Square a=new Square(j,k);
 			return a;
 		}
-
 		
+		public Pentomino(){
+			Square[] lOther2 = new Square[lOther.length];
+			System.arraycopy(lOther, 0, lOther2, 0, lOther.length);
+			for (Square square : lOther2) {
+				square.setC(Color.GREEN);
+			}
+			squares.add(lOther2[0]);
+			squares.add(lOther2[1]);
+			squares.add(lOther2[2]);
+			squares.add(lOther2[3]);
+			squares.add(lOther2[4]);
+		}
+
+		ArrayList<Square> squares = new ArrayList<Square>();
+
+		public Square[] getSquares() {
+			
+			return squares.toArray(new Square[squares.size()]);
+		}
+
+		public void moveX(int j) {
+			for (Square s : squares) {
+				s.setX(s.getX()+j);
+			}
+			
+		}
+
+		public void moveY(int j) {
+			for (Square s : squares) {
+				s.setY(s.getY()+j);
+			}
+			
+		}
+
+	public boolean below(int line) {
+			
+			int count = 0;
+			for (Square s : squares) {
+				if (s.getY()>line)count++;
+				
+			}
+			if (count == squares.size())return true;
+			return false;
+		}
 		
 	}
