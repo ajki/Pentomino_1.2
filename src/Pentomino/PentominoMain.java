@@ -17,13 +17,14 @@ import Pentomino.Interfaces.TetrisGame;
 public class PentominoMain extends Canvas implements Runnable,Display{
 	
 	protected static final int WIDTH=400, HEIGHT=565;
+	protected static  int WIDTHf=400, HEIGHTf=565;
 	protected TetrisGame game;
 	private Controller controller;
 	private Board board;
-	
+	private static PentominoMain pm ;
 	
 	public static void main(String[] args){
-		final PentominoMain pm = new PentominoMain();
+		pm = new PentominoMain();
 		
 		final JFrame frame = new JFrame("Pentomino");
 		
@@ -103,7 +104,8 @@ public class PentominoMain extends Canvas implements Runnable,Display{
 		
 		
 		pm.setBounds(0, 25, WIDTH, HEIGHT-25);
-		
+		WIDTHf=pm.getWidth();
+		HEIGHTf=pm.getHeight();
 		frame.add(pm);
 		bar.add(file);
 		file.add(newGame);
@@ -167,14 +169,15 @@ public class PentominoMain extends Canvas implements Runnable,Display{
 		g.setFont(new Font("Calibri", Font.PLAIN, 20));
 		g.drawString("Pentomino", 140, 50);
 		}else{
-		drawBoard(g,WIDTH,HEIGHT,board);
+		drawBoard(g,WIDTH,HEIGHT-25,board);
 		}
 	}
 
 	private void drawBoard(Graphics2D g, int width2, int height2, Board board2) {
 		g.setColor(Color.lightGray);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
-		
+		g.fillRect(0, 0, width2, height2);
+		width2 = pm.getWidth();
+		height2 = pm.getHeight()-30;
 		if (board2==null)return;
 		Square[][] s = board2.getFullBoard();
 		

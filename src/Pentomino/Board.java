@@ -1,6 +1,7 @@
 package Pentomino;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import Pentomino.Interfaces.Control;
 
@@ -8,6 +9,7 @@ public class Board {
 	Square[][] board;
 	Square[][] shadowBoard;
 	Pentomino livingPentomino;
+	Pentomino shadowPentomino;
 	public Board(int gameWidth, int gameHeight){
 		board = new Square[gameHeight][gameWidth];
 		for (int i = 0; i < board.length; i++) {
@@ -15,13 +17,38 @@ public class Board {
 				board[i][j]=new Square(i, j);
 			}
 		}
-	}
-	
-	public void checkForFullLines(){
 		
 	}
-	public int removeFullLines(){
-		return 0;
+	
+	public ArrayList<Integer> checkForFullLines(){
+		ArrayList<Integer> fullLines = new ArrayList<Integer>();
+		for (int i = 0;i<board.length;i++){
+			int count = 0;
+			for (int j = 0;j<board[1].length;j++){
+				if (board[i][j].getC().getRGB()!=Color.BLUE.getRGB())count++;
+			}
+			if (count == board[1].length){
+				fullLines.add(i);
+			}
+		}
+		return fullLines;
+	}
+	public void removeFullLines(ArrayList<Integer> fullLines){
+		for (Integer line : fullLines) {
+			for (int x=0;x<board[line].length;x++){
+				if (line==0)board[line][x] = new Square(board[line][x].getX(),board[line][x].getY());
+				else{
+					for (int y=0;y<line;y++){
+						board[line][x] = board[line-1][x];
+						board[line][x].setY(board[line][x].getY()+1);
+					}
+					board[line][x] = new Square(board[line][x].getX(),board[line][x].getY());
+				}
+				
+				
+			}
+		}
+		
 	}
 	public Square[][] getFullBoard(){
 		return board;
@@ -30,7 +57,14 @@ public class Board {
 		return livingPentomino;
 	}
 	public void setLivingPentominoDown(){
-		
+		if (livingPentomino==null)return;
+		if (!livingPentomino.below(-1)){System.out.println("endgame");}
+		Square[] s = livingPentomino.getSquares();
+		for (int i= 0;i<s.length;i++){
+			Square ss = s[i];//singlesquare
+			board[ss.getY()][ss.getX()]=ss;
+		}
+		livingPentomino=null;
 	}
 	public void moveLivingPentominoOneTick(){
 		if (livingPentomino==null) {
@@ -50,7 +84,9 @@ public class Board {
 			return;
 		}
 	}
-	public void moveLivingPentomino(Control c) {
+	public void moveLivingPentomino(Control c, boolean reverseXY) {
+		if (livingPentomino==null)return;
+		if (!reverseXY){
 		if (c.isButtonPressed(Control.Buttons.Left) ){
 			livingPentomino.moveX(-1);
 		}
@@ -59,10 +95,28 @@ public class Board {
 		}
 		if (c.isButtonPressed(Control.Buttons.Right) ){
 			livingPentomino.moveX(1);
+		}}else{
+			if (c.isButtonPressed(Control.Buttons.Left) ){
+				livingPentomino.moveX(1);
+			}
+			if (c.isButtonPressed(Control.Buttons.Down) ){
+				livingPentomino.moveY(-1);
+			}
+			if (c.isButtonPressed(Control.Buttons.Right) ){
+				livingPentomino.moveX(-1);
+			}
 		}
 		
 		
 		
 	}
+
+	public void moveLivingPentomino(int y, int x) {
+		if (livingPentomino==null)return;
+		livingPentomino.moveX(x);
+		livingPentomino.moveY(y);
+		
+	}
+	
 	
 }

@@ -41,12 +41,20 @@ public void start() {
 			System.out.println("tick");
 			
 			b.moveLivingPentominoOneTick();
+			if (Collision()){
+				b.moveLivingPentomino(-1,0);
+				b.setLivingPentominoDown();
+				b.removeFullLines(b.checkForFullLines());
+			}
 			d.refresh();
 		}
 	});
 	 t2 = new javax.swing.Timer(CI.getSpeedOfControl(), new ActionListener() {	
 		public void actionPerformed(ActionEvent e) {
 			MoveControl(c);
+			if (Collision()){
+				b.moveLivingPentomino(c,true);
+			}
 			d.refresh();
 		}
 	});
@@ -54,9 +62,11 @@ public void start() {
 	t2.start();
 	
 }
+
+
 private void createStandartConfigurationInterface() {
 	CI = new ConfigurationInterface() {
-		int sc = 1000/100;
+		int sc = 1000/50;
 		int ss = 1000/10;
 		public int getSpeedOfControl() {
 			return sc;
@@ -91,15 +101,30 @@ private void createStandartConfigurationInterface() {
 	
 }
 public void MoveControl(Control c) {
-	b.moveLivingPentomino(c);
+	b.moveLivingPentomino(c,false);
 	
 }
+
 public void MoveTime() {
 	b.moveLivingPentominoOneTick();
 	
 }
 public boolean Collision() {
-	
+	Pentomino p = b.getLivingPentomino();
+	if (p==null)return false;
+	for (Square s : p.getSquares()) {
+		Square[][] ss =b.board;
+		int y =s.getY();
+		int x =s.getX();
+		if (y<0)continue;
+		if (y>=ss.length)return true;
+		if (x<0) return true;
+		if (x>=ss[0].length)return true;
+		if(!ss[s.getY()][s.getX()].getC().equals(Color.BLUE)){
+			return true;
+		}
+		
+	}
 	return false;
 }
 public boolean PlacePiece() {

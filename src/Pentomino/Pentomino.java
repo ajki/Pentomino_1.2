@@ -12,7 +12,6 @@ import Pentomino.Interfaces.PentominoInterface;
 		protected Square[] pM1= {Square(-1,0),Square(0,0),Square(1,0),Square(0,-1),Square(1,-1)};
 		protected Square[] pM2= {Square(0,1),Square(-1,0),Square(0,0),Square(-1,-1),Square(0,-1)};
 		protected Square[] pM3= {Square(-1,1),Square(0,1),Square(-1,0),Square(0,0),Square(1,0)};
-		
 		protected Square[] pOther= {Square(-1,1),Square(0,1),Square(-1,0),Square(0,0),Square(0,-1)};
 		protected Square[] pO1= {Square(0,1),Square(1,1),Square(-1,0),Square(0,0),Square(1,0)};
 		protected Square[] pO2= {Square(0,1),Square(0,0),Square(1,0),Square(0,-1),Square(1,-1)};
@@ -94,8 +93,8 @@ import Pentomino.Interfaces.PentominoInterface;
 		}
 		
 		public Pentomino(){
-			Square[] lOther2 = new Square[lOther.length];
-			System.arraycopy(lOther, 0, lOther2, 0, lOther.length);
+			Square[] lOther2 = new Square[lO1.length];
+			System.arraycopy(lO1, 0, lOther2, 0, lOther.length);
 			for (Square square : lOther2) {
 				square.setC(Color.GREEN);
 			}
