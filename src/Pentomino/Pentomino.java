@@ -2,110 +2,225 @@ package Pentomino;
 
 import java.awt.Color;
 import java.awt.List;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Random;
 
 import Pentomino.Interfaces.PentominoInterface;
 	
+	/** A pentomino contains of 5 Squares.
+	 * @see Square
+	 * You can move this pentomino arround with the method moveX and moveY by that the coordinates of the according squares will
+	 * be updated.
+	 * 
+	 * @author Markus
+	 * @author Emil
+	 */
 	public class Pentomino implements PentominoInterface
 	{
-		protected Square[] pMain= {Square(0,1),Square(1,1),Square(0,0),Square(1,0),Square(0,-1)};
-		protected Square[] pM1= {Square(-1,0),Square(0,0),Square(1,0),Square(0,-1),Square(1,-1)};
-		protected Square[] pM2= {Square(0,1),Square(-1,0),Square(0,0),Square(-1,-1),Square(0,-1)};
-		protected Square[] pM3= {Square(-1,1),Square(0,1),Square(-1,0),Square(0,0),Square(1,0)};
-		protected Square[] pOther= {Square(-1,1),Square(0,1),Square(-1,0),Square(0,0),Square(0,-1)};
-		protected Square[] pO1= {Square(0,1),Square(1,1),Square(-1,0),Square(0,0),Square(1,0)};
-		protected Square[] pO2= {Square(0,1),Square(0,0),Square(1,0),Square(0,-1),Square(1,-1)};
-		protected Square[] pO3= {Square(-1,0),Square(0,0),Square(1,0),Square(-1,-1),Square(0,-1)};
+		ArrayList<Square> squares = new ArrayList<Square>();
 		
-		protected Square[] x= {Square(0,1),Square(-1,0),Square(0,0),Square(1,0),Square(0,-1)};
+		//TODO rename all the arrays so that they can somehow be chosen.
 		
-		protected Square[] u= {Square(0,1),Square(1,1),Square(0,0),Square(0,-1),Square(1,-1)};
-		protected Square[] u1= {Square(-1,0),Square(0,0),Square(1,0),Square(-1,-1),Square(1,-1)};
-		protected Square[] u2= {Square(-1,1),Square(0,1),Square(0,0),Square(-1,-1),Square(0,-1)};
-		protected Square[] u3= {Square(-1,1),Square(1,1),Square(-1,0),Square(0,0),Square(1,0)};
+		//
+		protected Square[] pa0= {Square(0,1),Square(1,1),Square(0,0),Square(1,0),Square(0,-1)};
+		protected Square[] pa1= {Square(-1,0),Square(0,0),Square(1,0),Square(0,-1),Square(1,-1)};
+		protected Square[] pa2= {Square(0,1),Square(-1,0),Square(0,0),Square(-1,-1),Square(0,-1)};
+		protected Square[] pa3= {Square(-1,1),Square(0,1),Square(-1,0),Square(0,0),Square(1,0)};
 		
-		protected Square[] zMain= {Square(-1,1),Square(0,1),Square(0,0),Square(0,-1),Square(1,-1)};
-		protected Square[] zM2= {Square(1,1),Square(-1,0),Square(0,0),Square(1,0),Square(-1,-1)};
-		protected Square[] zOther= {Square(0,1),Square(1,1),Square(0,0),Square(-1,-1),Square(0,-1)};
-		protected Square[] zO1= {Square(-1,1),Square(-1,0),Square(0,0),Square(1,0),Square(1,-1)};
+		protected Square[] pb0= {Square(-1,1),Square(0,1),Square(-1,0),Square(0,0),Square(0,-1)};
+		protected Square[] pb1= {Square(0,1),Square(1,1),Square(-1,0),Square(0,0),Square(1,0)};
+		protected Square[] pb2= {Square(0,1),Square(0,0),Square(1,0),Square(0,-1),Square(1,-1)};
+		protected Square[] pb3= {Square(-1,0),Square(0,0),Square(1,0),Square(-1,-1),Square(0,-1)};
 		
-		protected Square[] i= {Square(0,4),Square(0,3),Square(0,2),Square(0,1),Square(0,0)};
-		protected Square[] i1= {Square(0,0),Square(1,0),Square(2,0),Square(3,0),Square(4,0)};
+		protected Square[] xa0= {Square(0,1),Square(-1,0),Square(0,0),Square(1,0),Square(0,-1)};
 		
-		protected Square[] t= {Square(-1,0),Square(0,0),Square(1,0),Square(0,-1),Square(0,-2)};
-		protected Square[] t1= {Square(1,1),Square(-2,0),Square(-1,0),Square(0,0),Square(0,-1)};
-		protected Square[] t2= {Square(0,2),Square(0,1),Square(-1,0),Square(0,0),Square(1,0)};
-		protected Square[] t3= {Square(0,1),Square(0,0),Square(1,0),Square(2,0),Square(0,-1)};
+		protected Square[] ua0= {Square(0,1),Square(1,1),Square(0,0),Square(0,-1),Square(1,-1)};
+		protected Square[] ua1= {Square(-1,0),Square(0,0),Square(1,0),Square(-1,-1),Square(1,-1)};
+		protected Square[] ua2= {Square(-1,1),Square(0,1),Square(0,0),Square(-1,-1),Square(0,-1)};
+		protected Square[] ua3= {Square(-1,1),Square(1,1),Square(-1,0),Square(0,0),Square(1,0)};
 		
-		protected Square[] v= {Square(0,2),Square(0,1),Square(0,0),Square(1,0),Square(2,0)};
-		protected Square[] v1= {Square(0,0),Square(1,0),Square(2,0),Square(0,-1),Square(0,-2)};
-		protected Square[] v2= {Square(-2,0),Square(-1,0),Square(0,0),Square(0,-1),Square(0,-2)};
-		protected Square[] v3= {Square(0,2),Square(0,1),Square(-2,0),Square(-1,0),Square(0,0)};
+		protected Square[] za0= {Square(-1,1),Square(0,1),Square(0,0),Square(0,-1),Square(1,-1)};
+		protected Square[] za1= {Square(1,1),Square(-1,0),Square(0,0),Square(1,0),Square(-1,-1)};
 		
-		protected Square[] w= {Square(-1,1),Square(-1,0),Square(0,0),Square(0,-1),Square(1,-1)};
-		protected Square[] w1= {Square(0,1),Square(1,1),Square(-1,0),Square(0,0),Square(-1,-1)};
-		protected Square[] w2= {Square(-1,1),Square(0,1),Square(0,0),Square(1,0),Square(1,-1)};
-		protected Square[] w3= {Square(1,1),Square(0,0),Square(1,0),Square(-1,-1),Square(0,-1)};
+		protected Square[] zb0= {Square(0,1),Square(1,1),Square(0,0),Square(-1,-1),Square(0,-1)};
+		protected Square[] zb1= {Square(-1,1),Square(-1,0),Square(0,0),Square(1,0),Square(1,-1)};
 		
-		protected Square[] yMain= {Square(0,1),Square(-1,0),Square(0,0),Square(0,-1),Square(0,-2)};
-		protected Square[] yM1= {Square(0,1),Square(-2,0),Square(-1,0),Square(0,0),Square(1,0)};
-		protected Square[] yM2= {Square(0,2),Square(0,1),Square(0,0),Square(1,0),Square(0,-1)};
-		protected Square[] yM3= {Square(-1,0),Square(0,0),Square(1,0),Square(2,0),Square(-1,0)};
+		protected Square[] ia0= {Square(0,4),Square(0,3),Square(0,2),Square(0,1),Square(0,0)};
+		protected Square[] ia1= {Square(0,0),Square(1,0),Square(2,0),Square(3,0),Square(4,0)};
 		
-		protected Square[] yOther= {Square(0,1),Square(0,0),Square(1,0),Square(0,-1),Square(0,-2)};
-		protected Square[] yO1= {Square(-2,0),Square(-1,0),Square(0,0),Square(1,0),Square(0,-1)};
-		protected Square[] yO2= {Square(0,2),Square(0,1),Square(-1,0),Square(0,0),Square(0,-1)};
-		protected Square[] yO3= {Square(0,1),Square(-1,0),Square(0,0),Square(1,0),Square(2,0)};
+		protected Square[] ta0= {Square(-1,0),Square(0,0),Square(1,0),Square(0,-1),Square(0,-2)};
+		protected Square[] ta1= {Square(1,1),Square(-2,0),Square(-1,0),Square(0,0),Square(0,-1)};
+		protected Square[] ta2= {Square(0,2),Square(0,1),Square(-1,0),Square(0,0),Square(1,0)};
+		protected Square[] ta3= {Square(0,1),Square(0,0),Square(1,0),Square(2,0),Square(0,-1)};
 		
-		protected Square[] nMain= {Square(-1,1),Square(-1,0),Square(0,0),Square(0,-1),Square(0,-2)};
-		protected Square[] nM1= {Square(0,1),Square(1,1),Square(-2,0),Square(-1,0),Square(0,0)};
-		protected Square[] nM2= {Square(0,2),Square(0,1),Square(0,0),Square(1,0),Square(1,-1)};
-		protected Square[] nM3= {Square(0,0),Square(1,0),Square(2,0),Square(-1,-1),Square(0,-1)};
+		protected Square[] va0= {Square(0,2),Square(0,1),Square(0,0),Square(1,0),Square(2,0)};
+		protected Square[] va1= {Square(0,0),Square(1,0),Square(2,0),Square(0,-1),Square(0,-2)};
+		protected Square[] va2= {Square(-2,0),Square(-1,0),Square(0,0),Square(0,-1),Square(0,-2)};
+		protected Square[] va3= {Square(0,2),Square(0,1),Square(-2,0),Square(-1,0),Square(0,0)};
 		
-		protected Square[] nOther= {Square(1,1),Square(0,0),Square(1,0),Square(0,-1),Square(0,-2)};
-		protected Square[] nO1= {Square(-2,0),Square(-1,0),Square(0,0),Square(0,-1),Square(1,-1)};
-		protected Square[] nO2= {Square(0,2),Square(0,1),Square(-1,0),Square(0,0),Square(-1,-1)};
-		protected Square[] nO3= {Square(-1,1),Square(0,1),Square(0,0),Square(1,0),Square(2,0)};
+		protected Square[] wa0= {Square(-1,1),Square(-1,0),Square(0,0),Square(0,-1),Square(1,-1)};
+		protected Square[] wa1= {Square(0,1),Square(1,1),Square(-1,0),Square(0,0),Square(-1,-1)};
+		protected Square[] wa2= {Square(-1,1),Square(0,1),Square(0,0),Square(1,0),Square(1,-1)};
+		protected Square[] wa3= {Square(1,1),Square(0,0),Square(1,0),Square(-1,-1),Square(0,-1)};
 		
-		protected Square[] fMain= {Square(0,1),Square(1,1),Square(-1,0),Square(0,0),Square(0,-1)};
-		protected Square[] fM1= {Square(0,1),Square(-1,0),Square(0,0),Square(1,0),Square(1,-1)};
-		protected Square[] fM2= {Square(0,1),Square(0,0),Square(1,0),Square(-1,-1),Square(0,-1)};
-		protected Square[] fM3= {Square(-1,1),Square(-1,0),Square(0,0),Square(1,0),Square(0,-1)};
+		protected Square[] ya0= {Square(0,1),Square(-1,0),Square(0,0),Square(0,-1),Square(0,-2)};
+		protected Square[] ya1= {Square(0,1),Square(-2,0),Square(-1,0),Square(0,0),Square(1,0)};
+		protected Square[] ya2= {Square(0,2),Square(0,1),Square(0,0),Square(1,0),Square(0,-1)};
+		protected Square[] ya3= {Square(-1,0),Square(0,0),Square(1,0),Square(2,0),Square(-1,0)};
 		
-		protected Square[] fOther= {Square(-1,1),Square(0,1),Square(0,0),Square(1,0),Square(0,-1)};
-		protected Square[] fO1= {Square(1,1),Square(-1,0),Square(0,0),Square(1,0),Square(0,-1)};
-		protected Square[] fO2= {Square(0,1),Square(-1,0),Square(0,0),Square(0,-1),Square(1,-1)};
-		protected Square[] fO3= {Square(0,1),Square(-1,0),Square(0,0),Square(1,0),Square(-1,-1)};
+		protected Square[] yb0= {Square(0,1),Square(0,0),Square(1,0),Square(0,-1),Square(0,-2)};
+		protected Square[] yb1= {Square(-2,0),Square(-1,0),Square(0,0),Square(1,0),Square(0,-1)};
+		protected Square[] yb2= {Square(0,2),Square(0,1),Square(-1,0),Square(0,0),Square(0,-1)};
+		protected Square[] yb3= {Square(0,1),Square(-1,0),Square(0,0),Square(1,0),Square(2,0)};
 		
-		protected Square[] lMain= {Square(0,3),Square(0,2),Square(0,1),Square(0,0),Square(1,0)};
-		protected Square[] lM1= {Square(0,0),Square(1,0),Square(2,0),Square(3,0),Square(0,-1)};
-		protected Square[] lM2= {Square(-1,0),Square(0,0),Square(0,-1),Square(0,-2),Square(0,-3)};
-		protected Square[] lM3= {Square(0,1),Square(-3,0),Square(-2,0),Square(-1,0),Square(0,0)};
+		protected Square[] na0= {Square(-1,1),Square(-1,0),Square(0,0),Square(0,-1),Square(0,-2)};
+		protected Square[] na1= {Square(0,1),Square(1,1),Square(-2,0),Square(-1,0),Square(0,0)};
+		protected Square[] na2= {Square(0,2),Square(0,1),Square(0,0),Square(1,0),Square(1,-1)};
+		protected Square[] na3= {Square(0,0),Square(1,0),Square(2,0),Square(-1,-1),Square(0,-1)};
 		
-		protected Square[] lOther= {Square(0,3),Square(0,2),Square(0,1),Square(0,0),Square(-1,0)};
-		protected Square[] lO1= {Square(0,1),Square(0,0),Square(1,0),Square(2,0),Square(3,0)};
-		protected Square[] lO2= {Square(0,0),Square(1,0),Square(0,-1),Square(0,-2),Square(0,-3)};
-		protected Square[] lO3= {Square(-3,0),Square(-2,0),Square(-1,0),Square(0,0),Square(0,-1)};
+		protected Square[] nb0= {Square(1,1),Square(0,0),Square(1,0),Square(0,-1),Square(0,-2)};
+		protected Square[] nb1= {Square(-2,0),Square(-1,0),Square(0,0),Square(0,-1),Square(1,-1)};
+		protected Square[] nb2= {Square(0,2),Square(0,1),Square(-1,0),Square(0,0),Square(-1,-1)};
+		protected Square[] nb3= {Square(-1,1),Square(0,1),Square(0,0),Square(1,0),Square(2,0)};
+		
+		protected Square[] fa0= {Square(0,1),Square(1,1),Square(-1,0),Square(0,0),Square(0,-1)};
+		protected Square[] fa1= {Square(0,1),Square(-1,0),Square(0,0),Square(1,0),Square(1,-1)};
+		protected Square[] fa2= {Square(0,1),Square(0,0),Square(1,0),Square(-1,-1),Square(0,-1)};
+		protected Square[] fa3= {Square(-1,1),Square(-1,0),Square(0,0),Square(1,0),Square(0,-1)};
+		
+		protected Square[] fb0= {Square(-1,1),Square(0,1),Square(0,0),Square(1,0),Square(0,-1)};
+		protected Square[] fb1= {Square(1,1),Square(-1,0),Square(0,0),Square(1,0),Square(0,-1)};
+		protected Square[] fb2= {Square(0,1),Square(-1,0),Square(0,0),Square(0,-1),Square(1,-1)};
+		protected Square[] fb3= {Square(0,1),Square(-1,0),Square(0,0),Square(1,0),Square(-1,-1)};
+		
+		protected Square[] la0= {Square(0,3),Square(0,2),Square(0,1),Square(0,0),Square(1,0)};
+		protected Square[] la1= {Square(0,0),Square(1,0),Square(2,0),Square(3,0),Square(0,-1)};
+		protected Square[] la2= {Square(-1,0),Square(0,0),Square(0,-1),Square(0,-2),Square(0,-3)};
+		protected Square[] la3= {Square(0,1),Square(-3,0),Square(-2,0),Square(-1,0),Square(0,0)};
+		
+		protected Square[] lb0= {Square(0,3),Square(0,2),Square(0,1),Square(0,0),Square(-1,0)};
+		protected Square[] lb1= {Square(0,1),Square(0,0),Square(1,0),Square(2,0),Square(3,0)};
+		protected Square[] lb2= {Square(0,0),Square(1,0),Square(0,-1),Square(0,-2),Square(0,-3)};
+		protected Square[] lb3= {Square(-3,0),Square(-2,0),Square(-1,0),Square(0,0),Square(0,-1)};
+		ArrayList<Square[]> pentomino= new ArrayList<Square[]>();
+		
+		
 		
 		public Square Square(int j, int k) {
 			Square a=new Square(j,k);
 			return a;
 		}
 		
-		public Pentomino(){
-			Square[] lOther2 = new Square[lO1.length];
-			System.arraycopy(lO1, 0, lOther2, 0, lOther.length);
-			for (Square square : lOther2) {
-				square.setC(Color.GREEN);
+		public Pentomino() {
+			//TODO modify the constructor that a random pentomino gets choosen. Depending on the chosen pentomino, a different color should be used
+			loadPentominosIntoArray();
+			Random r = new Random();
+			int index = r.nextInt(pentomino.size());
+			
+				//f = this.getClass().getField("la1");
+			
+			
+			Square[] newPiece = new Square[5];
+			boolean rainbow = false;
+			Color c = ColorE.colorM();
+			System.arraycopy(pentomino.get(index), 0, newPiece, 0, pentomino.get(index).length);
+			for (Square square : newPiece) {
+				if (rainbow)square.setC(ColorE.colorM());else square.setC(c);
 			}
-			squares.add(lOther2[0]);
-			squares.add(lOther2[1]);
-			squares.add(lOther2[2]);
-			squares.add(lOther2[3]);
-			squares.add(lOther2[4]);
+			squares.add(newPiece[0]);
+			squares.add(newPiece[1]);
+			squares.add(newPiece[2]);
+			squares.add(newPiece[3]);
+			squares.add(newPiece[4]);
+			
 		}
 
-		ArrayList<Square> squares = new ArrayList<Square>();
+		private void loadPentominosIntoArray() {
+			pentomino= new ArrayList<Square[]>();
+			pentomino.add(pa0);
+			pentomino.add(pa1);
+			pentomino.add(pa2);
+			pentomino.add(pa3);
+			
+			pentomino.add(pb0);
+			pentomino.add(pb1);
+			pentomino.add(pb2);
+			pentomino.add(pb3);
+			
+			pentomino.add(xa0);
+			
+			pentomino.add(ua0);
+			pentomino.add(ua1);
+			pentomino.add(ua2);
+			pentomino.add(ua3);
+			
+			pentomino.add(za0);
+			pentomino.add(za1);
+			
+			pentomino.add(zb0);
+			pentomino.add(zb1);
+			
+			pentomino.add(ia0);
+			pentomino.add(ia1);
+			
+			pentomino.add(ta0);
+			pentomino.add(ta1);
+			pentomino.add(ta2);
+			pentomino.add(ta3);
+			
+			pentomino.add(va0);
+			pentomino.add(va1);
+			pentomino.add(va2);
+			pentomino.add(va3);
+			
+			pentomino.add(wa0);
+			pentomino.add(wa1);
+			pentomino.add(wa2);
+			pentomino.add(wa3);
+			
+			pentomino.add(ya0);
+			pentomino.add(ya1);
+			pentomino.add(ya2);
+			pentomino.add(ya3);
+			
+			pentomino.add(yb0);
+			pentomino.add(yb1);
+			pentomino.add(yb2);
+			pentomino.add(yb3);
+			
+			pentomino.add(na0);
+			pentomino.add(na1);
+			pentomino.add(na2);
+			pentomino.add(na3);
+			
+			pentomino.add(nb0);
+			pentomino.add(nb1);
+			pentomino.add(nb2);
+			pentomino.add(nb3);
+			
+			pentomino.add(fa0);
+			pentomino.add(fa1);
+			pentomino.add(fa2);
+			pentomino.add(fa3);
+			
+			pentomino.add(fb0);
+			pentomino.add(fb1);
+			pentomino.add(fb2);
+			pentomino.add(fb3);
+			
+			pentomino.add(la0);
+			pentomino.add(la1);
+			pentomino.add(la2);
+			pentomino.add(la3);
+			
+			pentomino.add(lb0);
+			pentomino.add(lb1);
+			pentomino.add(lb2);
+			pentomino.add(lb3);
+		}
+
+		
 
 		public Square[] getSquares() {
 			
