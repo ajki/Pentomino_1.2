@@ -29,6 +29,9 @@ public class Square {
 	public void setC(Color c){
 		this.c=c;
 	}
+	public void setC(ColorE c){
+		this.c=c;
+	}
 	public int getX(){
 		return x;
 	}

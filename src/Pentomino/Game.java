@@ -13,6 +13,7 @@ import Pentomino.Interfaces.TetrisGame;
 
 public class Game implements TetrisGame{
 	Control c;
+	
 	Display d;
 	Board b;
 	ConfigurationInterface CI;
@@ -63,7 +64,9 @@ public void start() {
 	
 }
 
-
+protected void setC(Control c) {
+	this.c = c;
+}
 private void createStandartConfigurationInterface() {
 	CI = new ConfigurationInterface() {
 		int sc = 1000/50;

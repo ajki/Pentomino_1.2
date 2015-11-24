@@ -1,5 +1,6 @@
 package Pentomino;
 
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -14,6 +15,7 @@ public class Controller implements KeyListener,Control{
 	}
 	
 	public void keyPressed(KeyEvent e){
+		
 		if (KeyEvent.getKeyText(e.getKeyCode()).equals(Configuration.left)){
 			System.out.println("left pressed");
 			
@@ -64,6 +66,13 @@ public class Controller implements KeyListener,Control{
 		
 		return buttons[b.ordinal()];
 	}
+
+	public void overRideButton(Buttons b, boolean newValue) {
+		buttons[b.ordinal()] = newValue;
+		
+	}
+
+	
 	
 	
 	

@@ -2,6 +2,7 @@ package Pentomino;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import Pentomino.Interfaces.Control;
 
@@ -12,6 +13,7 @@ public class Board {
 	Pentomino shadowPentomino;
 	public Board(int gameWidth, int gameHeight){
 		board = new Square[gameHeight][gameWidth];
+		shadowBoard = new Square[gameHeight][gameWidth];
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[0].length; j++) {
 				board[i][j]=new Square(i, j);
@@ -115,6 +117,30 @@ public class Board {
 		if (livingPentomino==null)return;
 		livingPentomino.moveX(x);
 		livingPentomino.moveY(y);
+		
+	}
+
+	public ArrayList<Square[][]> getFullBoardShadow() {
+		//remember this ArrayList<Square>[][];
+		 for (int i = 0; i < board.length; i++) {
+			 shadowBoard[i] = Arrays.copyOf(board[i], board[i].length);
+		 }
+		 //maybeInverse here, for the 4d part....
+		 
+		 
+		 
+		Square[][] shadowBoard2 = new Square[board.length][board[0].length];
+		 for (int j = 0; j < board.length; j++) {
+			 shadowBoard2[j] = Arrays.copyOf(board[j], board[j].length);
+			}
+		 ArrayList<Square[][]> asd = new ArrayList<Square[][]>();
+		 asd.add(shadowBoard);
+		 asd.add(shadowBoard2);
+		return asd;
+	}
+
+	public void setFullBoard(Square[][] extracted) {
+		board = extracted;
 		
 	}
 	

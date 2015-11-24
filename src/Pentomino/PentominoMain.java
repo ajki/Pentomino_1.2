@@ -7,8 +7,10 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 
 import javax.swing.*;
+
 
 import Pentomino.Interfaces.Control;
 import Pentomino.Interfaces.Display;
@@ -25,7 +27,7 @@ public class PentominoMain extends Canvas implements Runnable,Display{
 	
 	public static void main(String[] args){
 		pm = new PentominoMain();
-		
+		pm.controller = new Controller();
 		final JFrame frame = new JFrame("Pentomino");
 		
 		frame.setSize(WIDTH,HEIGHT);
@@ -155,14 +157,14 @@ public class PentominoMain extends Canvas implements Runnable,Display{
 	}
 	
 	public void initialize(){
-		controller = new Controller();
+		
 		this.addKeyListener(controller);
 		requestFocus();
 		
 	}
 	
 	public void render(Graphics2D g){
-		if (board==null){
+	if (board==null){
 		g.setColor(Color.MAGENTA);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setColor(Color.WHITE);
@@ -216,7 +218,40 @@ public class PentominoMain extends Canvas implements Runnable,Display{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public static Display getDisplayInstance() {
+		
+		return pm;
+	}
+	public static PentominoMain getInstance() {
+		
+		return pm;
+	}
+	public void setColorMode(String[] args) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void close() {
+		System.out.println("Closing...");
+		System.exit(0);
+	  
+		
+	}
+
+	public Control getController() {
+		
+		return controller;
+	}
+
+	public Board getBoard() {
+		return this.board;
+		
+	}
 	
-	
+	public TetrisGame getGame() {
+		
+		return game;
+	}
 
 }
