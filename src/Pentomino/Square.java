@@ -2,7 +2,7 @@ package Pentomino;
 
 import java.awt.Color;
 
-public class Square {
+public class Square implements Cloneable{
 	private int x,y,z;
 	private Color c;
 	/*
@@ -13,6 +13,7 @@ public class Square {
 		this.c=c;
 	}*/
 	public Square(int x, int y){
+		c = Color.BLUE;
 		this.x=x;
 		this.y=y;
 	}
@@ -28,6 +29,9 @@ public class Square {
 	public void setC(Color c){
 		this.c=c;
 	}
+	public void setC(ColorE c){
+		this.c=c;
+	}
 	public int getX(){
 		return x;
 	}
@@ -39,5 +43,11 @@ public class Square {
 	}
 	public Color getC(){
 		return c;
+	}
+	public Square copy() {
+		Square s = new Square(x,y);
+		s.z = z;
+		s.c = new Color(c.getRGB());
+		return s;
 	}
 }

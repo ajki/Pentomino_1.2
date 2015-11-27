@@ -7,16 +7,29 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
-public class PentominoMain extends Canvas implements Runnable{
+
+import Pentomino.Interfaces.Control;
+import Pentomino.Interfaces.Display;
+import Pentomino.Interfaces.TetrisGame;
+
+public class PentominoMain extends Canvas implements Runnable,Display{
 	
 	protected static final int WIDTH=400, HEIGHT=565;
+	protected static  int WIDTHf=400, HEIGHTf=565;
+	protected TetrisGame game;
+	private Controller controller;
+	private Board board;
+	private static PentominoMain pm ;
 	
 	public static void main(String[] args){
-		
+		pm = new PentominoMain();
+		pm.controller = new Controller();
 		final JFrame frame = new JFrame("Pentomino");
+		
 		frame.setSize(WIDTH,HEIGHT);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
@@ -37,9 +50,11 @@ public class PentominoMain extends Canvas implements Runnable{
 		file.setBounds(0,0,45,24);
 		
 		JMenuItem newGame = new JMenuItem("New Game");
+		
 		newGame.addActionListener(new ActionListener(){
+			
 			public void actionPerformed(ActionEvent e){
-				//Code for new game
+				startNewGame(pm);
 				System.out.println("Starting New Game...");
 			}
 		});
@@ -48,7 +63,9 @@ public class PentominoMain extends Canvas implements Runnable{
 		highScore.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				int highscore = 0; // replace this with getHighscoreMethod later
-				JFrame alert = new JFrame("High Score");
+				
+				//@
+				final JFrame alert = new JFrame("High Score");
 				alert.setSize(500, 400);
 				alert.setLayout(null);
 				alert.setLocationRelativeTo(null);
@@ -87,9 +104,10 @@ public class PentominoMain extends Canvas implements Runnable{
 			}
 		});
 		
-		PentominoMain pm = new PentominoMain();
-		pm.setBounds(0, 25, WIDTH, HEIGHT-25);
 		
+		pm.setBounds(0, 25, WIDTH, HEIGHT-25);
+		WIDTHf=pm.getWidth();
+		HEIGHTf=pm.getHeight();
 		frame.add(pm);
 		bar.add(file);
 		file.add(newGame);
@@ -103,6 +121,15 @@ public class PentominoMain extends Canvas implements Runnable{
 		
 	}
 	
+	/**This methods is executed after the users klings on start a new game
+	 * @param pm 
+	 * 
+	 */
+	protected static void startNewGame(PentominoMain pm) {
+		pm.game = new Game((Control)pm.controller, (Display)pm, null);
+		pm.game.start();
+	}
+
 	public void start() {
 		Thread t = new Thread(this);
 		t.setPriority(Thread.MAX_PRIORITY);
@@ -130,19 +157,101 @@ public class PentominoMain extends Canvas implements Runnable{
 	}
 	
 	public void initialize(){
-		this.addKeyListener(new Controller(this));
+		
+		this.addKeyListener(controller);
 		requestFocus();
 		
 	}
 	
 	public void render(Graphics2D g){
-		g.setColor(Color.BLACK);
+	if (board==null){
+		g.setColor(Color.MAGENTA);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Calibri", Font.PLAIN, 20));
 		g.drawString("Pentomino", 140, 50);
+		}else{
+		drawBoard(g,WIDTH,HEIGHT-25,board);
+		}
+	}
+
+	private void drawBoard(Graphics2D g, int width2, int height2, Board board2) {
+		g.setColor(Color.lightGray);
+		g.fillRect(0, 0, width2, height2);
+		width2 = pm.getWidth();
+		height2 = pm.getHeight()-30;
+		if (board2==null)return;
+		Square[][] s = board2.getFullBoard();
+		
+		int sH = s.length;
+		int sW = s[0].length;
+		int squareWidth = width2/sW; 
+		int squareHeight = height2/sH;
+		
+		for (int i = 0; i<sW;i++){
+			for (int j = 0; j <sH;j++){
+				g.setColor(s[j][i].getC());
+				g.fillRect(squareWidth*i, squareHeight*j, squareWidth, squareHeight);
+				g.setColor(Color.BLACK);
+				g.drawRect(squareWidth*i, squareHeight*j, squareWidth, squareHeight);				
+			}
+		}
+		
+		Pentomino p = board2.getLivingPentomino();
+		if (p==null) return;
+		Square[] ps= p.getSquares();
+		
+		for (int i = 0; i<ps.length;i++){
+			g.setColor(ps[i].getC());
+			g.fillRect(squareWidth*ps[i].getX(), squareHeight*ps[i].getY(), squareWidth, squareHeight);
+			g.setColor(Color.BLACK);
+			g.drawRect(squareWidth*ps[i].getX(), squareHeight*ps[i].getY(), squareWidth, squareHeight);	
+		}
+	}
+
+	public void setData(Board b) {
+		this.board = b;
+		
+	}
+
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static Display getDisplayInstance() {
+		
+		return pm;
+	}
+	public static PentominoMain getInstance() {
+		
+		return pm;
+	}
+	public void setColorMode(String[] args) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void close() {
+		System.out.println("Closing...");
+		System.exit(0);
+	  
+		
+	}
+
+	public Control getController() {
+		
+		return controller;
+	}
+
+	public Board getBoard() {
+		return this.board;
+		
 	}
 	
-	
+	public TetrisGame getGame() {
+		
+		return game;
+	}
 
 }
