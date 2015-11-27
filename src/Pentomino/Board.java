@@ -11,6 +11,7 @@ public class Board {
 	Square[][] shadowBoard;
 	Pentomino livingPentomino;
 	Pentomino shadowPentomino;
+	private boolean rotatePressed;
 	public Board(int gameWidth, int gameHeight){
 		board = new Square[gameHeight][gameWidth];
 		shadowBoard = new Square[gameHeight][gameWidth];
@@ -40,11 +41,11 @@ public class Board {
 			for (int x=0;x<board[line].length;x++){
 				if (line==0)board[line][x] = new Square(board[line][x].getX(),board[line][x].getY());
 				else{
-					for (int y=0;y<line;y++){
-						board[line][x] = board[line-1][x];
-						board[line][x].setY(board[line][x].getY()+1);
+					for (int y=line;y>0;y--){
+						board[y][x] = board[y-1][x];
+						board[y][x].setY(board[y][x].getY()+1);
 					}
-					board[line][x] = new Square(board[line][x].getX(),board[line][x].getY());
+					board[0][x] = new Square(board[0][x].getX(),board[0][x].getY());
 				}
 				
 				
@@ -88,7 +89,18 @@ public class Board {
 	}
 	public void moveLivingPentomino(Control c, boolean reverseXY) {
 		if (livingPentomino==null)return;
+		
+			if (c.isButtonPressed(Control.Buttons.RotateRight) && !rotatePressed){
+				livingPentomino.rotate(true^reverseXY);
+				rotatePressed=true;
+			}
+			if (c.isButtonPressed(Control.Buttons.RotateLeft)  && !rotatePressed){
+				livingPentomino.rotate(false^reverseXY);
+				rotatePressed=true;
+			}
+			if (!c.isButtonPressed(Control.Buttons.RotateLeft) && !c.isButtonPressed(Control.Buttons.RotateRight)) rotatePressed=false;
 		if (!reverseXY){
+		
 		if (c.isButtonPressed(Control.Buttons.Left) ){
 			livingPentomino.moveX(-1);
 		}
